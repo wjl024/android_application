@@ -34,10 +34,11 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //不带数据的页面跳转
-                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+                Intent intent = new Intent(SplashActivity.this,RegisterActivity.class);
                 startActivity(intent);
+                SplashActivity.this.finish();
             }
         };
-        timer.schedule(task,5000);
+        timer.schedule(task,1000);
     }
 }
