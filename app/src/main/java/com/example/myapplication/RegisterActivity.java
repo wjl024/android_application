@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     private RadioButton rbtnMale;
     private RadioButton rbtnFemale;
     private RadioGroup rgSex;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         rbtnFemale = findViewById(R.id.rbtn_female);
         //1
         initView();
+        initToolbar();
         //2
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +92,23 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void initToolbar() {
+        toolbar = findViewById(R.id.title_bar);
+        toolbar.setTitle("注册");
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RegisterActivity.this.finish();
+            }
+        });
     }
 
     private void savePref(String username, String password,String sex) {

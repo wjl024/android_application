@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //不带数据的页面跳转
-                Intent intent = new Intent(SplashActivity.this,RegisterActivity.class);
+                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
                 startActivity(intent);
                 SplashActivity.this.finish();
             }
