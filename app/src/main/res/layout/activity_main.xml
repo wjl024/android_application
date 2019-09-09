@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Main1Activity">
+    <include layout="@layout/tool_bar"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -34,7 +35,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="首页"
+                android:text="课程"
                 android:textSize="18sp"
                 android:textColor="@drawable/selector_text"/>
             <RadioButton
@@ -47,7 +48,21 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="发现"
+                android:text="习题"
+                android:textSize="18sp"
+                android:textColor="@drawable/selector_text"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/rb_web"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/selector_web_drawable"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="资讯"
                 android:textSize="18sp"
                 android:textColor="@drawable/selector_text"
                 />

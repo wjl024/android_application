@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,13 +44,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onClick(View view) {
                 String username = lgUsername.getText().toString();
                 String password = lgPassword.getText().toString();
-                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
-                String mdPassword = pref.getString("password","");
+                String spPwd = readPwd(username);
                 if (TextUtils.isEmpty(password)){
                     Toast.makeText(LoginActivity.this,"密码不能为空",Toast.LENGTH_SHORT).show();
-                } else if (!mdPassword.equals(MD5Utils.md5(password))){
+                } else if (!spPwd.equals(MD5Utils.md5(password))){
                     Toast.makeText(LoginActivity.this,"密码或用户名无效",Toast.LENGTH_SHORT).show();
+                } else if(TextUtils.isEmpty(spPwd)){
+                    Toast.makeText(LoginActivity.this,"请先注册",Toast.LENGTH_SHORT).show();
                 } else {
+                    saveLoginStatus(username,true);
                     final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
                     progressDialog.setMessage("登录中");
                     progressDialog.setCancelable(true);
@@ -59,16 +62,42 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         @Override
                         public void run(){
                             progressDialog.dismiss();
+                            Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
                             Intent intent1 = new Intent(LoginActivity.this, Main1Activity.class);
+                            intent1.putExtra("isLogin",true);
                             startActivity(intent1);
+                            LoginActivity.this.finish();
                         }
                     },5000);
                 }
             }
+
+            private void saveLoginStatus(String username, boolean isLogin) {
+                getSharedPreferences("data",MODE_PRIVATE)
+                        .edit()
+                        .putString("loginUser",username)
+                        .putBoolean("isLogin",isLogin)
+                        .apply();
+            }
+
+            private String readPwd(String username){
+                SharedPreferences sp = getSharedPreferences("data",MODE_PRIVATE);
+                return sp.getString(username,"");
+            }
         });
     }
 
-//    private void initData() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data!=null){
+            String username = data.getStringExtra("username");
+            lgUsername.setText(username);
+//            lgUsername.setSelection(username.length());
+        }
+    }
+
+    //    private void initData() {
 //        String username = readPref();
 //        if (!TextUtils.isEmpty(username)){
 //            lgUsername.setText(username);
@@ -100,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         //处理register的监听
         Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
 }
 

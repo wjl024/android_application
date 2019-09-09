@@ -67,8 +67,10 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this,"密码不能为空",Toast.LENGTH_SHORT).show();
                 } else if (!password.equals(pswAgain)){
                     Toast.makeText(RegisterActivity.this,"两次密码必须一致",Toast.LENGTH_SHORT).show();
-                } else {
-                    savePref(username, MD5Utils.md5(password),sex);
+                } else if (isExist(username)){
+                    Toast.makeText(RegisterActivity.this,"用户名已存在",Toast.LENGTH_SHORT).show();
+                }else {
+                    savePref(username, MD5Utils.md5(password));
                     AlertDialog.Builder dialog = new AlertDialog.Builder(RegisterActivity.this);
                     dialog.setTitle("提示框");
                     dialog.setMessage("注册成功是否要跳转到登录界面");
@@ -77,9 +79,10 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String username = etUsername.getText().toString();
-                            Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                            Intent intent = new Intent();
                             intent.putExtra("username",username);
-                            startActivity(intent);
+                            setResult(RESULT_OK,intent);
+                            finish();
                         }
                     });
                     dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -111,12 +114,29 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void savePref(String username, String password,String sex) {
+    /**
+     * 保存用户信息
+     * @param username
+     * @param password
+     */
+    private void savePref(String username, String password) {
         SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();
-        editor.putString("username",username);
-        editor.putString("password",password);
-        editor.putString("sex",sex);
+//        editor.putString("username",username);
+//        editor.putString("password",password);
+//        editor.putString("sex",sex);
+        editor.putString(username,password);
         editor.apply();
+    }
+
+    /**
+     * 判断用户名是否存在
+     * @param username 用户名
+     * return true 存在 false 不存在
+     */
+    private boolean isExist(String username){
+        SharedPreferences sp = getSharedPreferences("data",MODE_PRIVATE);
+        String pwd = sp.getString(username,"");
+        return !TextUtils.isEmpty(pwd);
     }
 
     private void initView() {

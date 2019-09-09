@@ -12,6 +12,7 @@
         android:layout_marginTop="20sp"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/modify_password"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/border1_text"
@@ -31,6 +32,7 @@
         android:layout_marginBottom="20sp"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/setting_password_protect"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/border1_text"
@@ -49,6 +51,7 @@
         android:layout_height="50sp"
         android:orientation="horizontal">
         <TextView
+            android:id="@+id/log_out_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/border1_text"
