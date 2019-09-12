@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.MySettingFragment;
 import com.example.myapplication.utils.MD5Utils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = findViewById(R.id.login_btn);
         registerNow = findViewById(R.id.register_now);
         registerNow.setOnClickListener(this);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         String username = intent.getStringExtra("username");
         lgUsername.setText(username);
         initToolbar();
@@ -62,9 +63,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         @Override
                         public void run(){
                             progressDialog.dismiss();
+                            String username = lgUsername.getText().toString();
                             Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                            Intent intent1 = new Intent(LoginActivity.this, Main1Activity.class);
+                            //返回到我的页面
+                            Intent intent1 = new Intent(LoginActivity.this, MySettingFragment.class);
                             intent1.putExtra("isLogin",true);
+                            intent1.putExtra("loginUser",username);
+                            setResult(RESULT_OK,intent1);
                             startActivity(intent1);
                             LoginActivity.this.finish();
                         }

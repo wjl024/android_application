@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".Forget_pwd_Activity"></activity>
+        <activity android:name=".modify_pwd_Activity" />
+        <activity android:name=".SettingActivity" />
         <activity android:name=".MyActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
