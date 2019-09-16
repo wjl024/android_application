@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.media.CamcorderProfile;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
@@ -14,7 +13,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.MySettingFragment;
+import com.example.myapplication.fragment.MySettingFragment;
+import com.example.myapplication.R;
 
 import static android.media.CamcorderProfile.get;
 

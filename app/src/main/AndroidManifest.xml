@@ -9,20 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".Forget_pwd_Activity"></activity>
-        <activity android:name=".modify_pwd_Activity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".MyActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activity.ModifySignatureActivity"></activity>
+        <activity android:name=".activity.ModifyNicknameActivity" />
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity android:name=".activity.Forget_pwd_Activity" />
+        <activity android:name=".activity.modify_pwd_Activity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Main1Activity" />
+        <activity android:name=".activity.Main1Activity" />
     </application>
 
 </manifest>

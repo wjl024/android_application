@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.MySettingFragment;
+import com.example.myapplication.R;
 
 public class SettingActivity extends AppCompatActivity {
     private Toolbar toolbar;

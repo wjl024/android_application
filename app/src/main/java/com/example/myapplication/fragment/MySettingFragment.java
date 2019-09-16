@@ -1,4 +1,4 @@
-package com.example;
+package com.example.myapplication.fragment;
 
 
 import android.app.Activity;
@@ -16,9 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.LoginActivity;
+import com.example.myapplication.activity.LoginActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.SettingActivity;
+import com.example.myapplication.activity.SettingActivity;
+import com.example.myapplication.activity.UserInfoActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,7 +85,8 @@ public class MySettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (isLogin){
-
+                    Intent intent = new Intent(mContext, UserInfoActivity.class);
+                    startActivity(intent);
                 }else {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     startActivityForResult(intent,1);

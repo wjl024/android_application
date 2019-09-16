@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -17,7 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.MySettingFragment;
+import com.example.myapplication.fragment.MySettingFragment;
+import com.example.myapplication.R;
 import com.example.myapplication.utils.MD5Utils;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
