@@ -10,7 +10,7 @@ import com.example.myapplication.entity.User;
 public class UserServiceImpl implements UserService{
     private UserInfoDao dao;
 
-    private UserServiceImpl(Context context){
+    public UserServiceImpl(Context context){
         dao = new UserInfoDaoImpl(context);
     }
     @Override

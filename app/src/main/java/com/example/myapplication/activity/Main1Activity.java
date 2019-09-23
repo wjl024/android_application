@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.fragment.MySettingFragment;
 import com.example.myapplication.R;
+import com.example.myapplication.fragment.PractiseFragment;
 
 import static android.media.CamcorderProfile.get;
 
@@ -38,6 +39,7 @@ public class Main1Activity extends AppCompatActivity {
         rgNav.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                replaceFragment(fragments.get(checkedId));
                 switch (checkedId){
                     case R.id.rb_home:
                         Toast.makeText(Main1Activity.this,titles.get(R.id.rb_home),Toast.LENGTH_SHORT).show();
@@ -75,6 +77,7 @@ public class Main1Activity extends AppCompatActivity {
         //1.创建fragment列表
         fragments = new SparseArray<>();
         fragments.put(R.id.rb_my, MySettingFragment.newInstance());
+        fragments.put(R.id.rb_find, PractiseFragment.newInstance("Activity向Fragment传值"));
         //加载默认的fragment
         replaceFragment(fragments.get(R.id.rb_my));
     }
@@ -83,6 +86,7 @@ public class Main1Activity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.fragment_main,fragment);
+        ft.addToBackStack(null);
         ft.commit();
     }
 

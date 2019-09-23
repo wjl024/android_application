@@ -18,6 +18,8 @@
         <item name="windowNoTitle">true</item>
 <!--        设置工具栏的颜色-->
         <item name="colorControlNormal">@android:color/white</item>
+        <!--    自定义alertDialog-->
+        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert</item>
     </style>
     <style name="toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@android:color/white</item>
