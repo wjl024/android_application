@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.myapplication.fragment.ExerciseFragment;
 import com.example.myapplication.fragment.MySettingFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.fragment.PractiseFragment;
@@ -77,7 +78,7 @@ public class Main1Activity extends AppCompatActivity {
         //1.创建fragment列表
         fragments = new SparseArray<>();
         fragments.put(R.id.rb_my, MySettingFragment.newInstance());
-        fragments.put(R.id.rb_find, PractiseFragment.newInstance("Activity向Fragment传值"));
+        fragments.put(R.id.rb_find, ExerciseFragment.newInstance("Activity向Fragment传值"));
         //加载默认的fragment
         replaceFragment(fragments.get(R.id.rb_my));
     }

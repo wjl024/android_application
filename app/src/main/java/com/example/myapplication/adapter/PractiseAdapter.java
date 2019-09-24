@@ -57,7 +57,7 @@ public class PractiseAdapter extends BaseAdapter {
         final Exercise exercise = getItem(i);
         if (exercise != null){
             holder.tvOrder.setText(String.valueOf(i+1));
-            holder.tvOrder.setBackgroundResource(exercise.getBackground());
+            holder.tvOrder.setBackgroundResource(R.mipmap.circle);
             holder.tvTitle.setText(exercise.getTitle());
             holder.tvSubTitle.setText(exercise.getSubTitle());
 
