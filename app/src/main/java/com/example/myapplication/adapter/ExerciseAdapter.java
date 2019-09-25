@@ -1,6 +1,8 @@
 package com.example.myapplication.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,10 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         return holder;
     }
 
+    private OnItemClickListener mOnItemClickLIstener;
+    public void setmOnItemClickLIstener(OnItemClickListener listener){
+        this.mOnItemClickLIstener = listener;
+    }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Exercise exercise = mexerciseList.get(position);
@@ -52,7 +58,16 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             holder.tvOrder.setBackgroundResource(R.mipmap.circle);
             holder.tvTitle.setText(exercise.getTitle());
             holder.tvSubTitle.setText(exercise.getSubTitle());
+
+            //设置圆角背景的颜色
+            GradientDrawable drawable = (GradientDrawable) holder.tvOrder.getBackground();
+            drawable.setColor(Color.parseColor(exercise.getBgColor()));
         }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(View view,int position);
+        void onItemLongClick(View view,int position);
     }
 
     @Override

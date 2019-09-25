@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.myapplication.R;
+import com.example.myapplication.activity.ExerciseDetailActivity;
 import com.example.myapplication.adapter.ExerciseAdapter;
 import com.example.myapplication.entity.Exercise;
 
@@ -87,6 +90,22 @@ public class ExerciseFragment extends Fragment {
         tvExercise.setLayoutManager(layoutManager);
         ExerciseAdapter adapter = new ExerciseAdapter(getActivity(),exerciseList);
         tvExercise.setAdapter(adapter);
+        adapter.setmOnItemClickLIstener(new ExerciseAdapter.OnItemClickListener() {
+            @Override
+            //设置监听器
+            public void onItemClick(View view, int position) {
+                Exercise exercise = exerciseList.get(position);
+                Intent intent = new Intent(getContext(), ExerciseDetailActivity.class);
+                intent.putExtra("id",exercise.getId());
+                intent.putExtra("title",exercise.getTitle());
+                getContext().startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(getContext(),"long clicked"+position,Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".activity.ModifySignatureActivity"></activity>
+        <activity android:name=".activity.ExerciseDetailActivity"></activity>
+        <activity android:name=".activity.ModifySignatureActivity" />
         <activity android:name=".activity.ModifyNicknameActivity" />
         <activity android:name=".activity.UserInfoActivity" />
         <activity android:name=".activity.Forget_pwd_Activity" />
