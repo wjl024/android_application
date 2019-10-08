@@ -51,7 +51,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         this.mOnItemClickLIstener = listener;
     }
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Exercise exercise = mexerciseList.get(position);
         if (exercise!=null) {
             holder.tvOrder.setText(String.valueOf(position + 1));
@@ -60,8 +60,26 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             holder.tvSubTitle.setText(exercise.getSubTitle());
 
             //设置圆角背景的颜色
-            GradientDrawable drawable = (GradientDrawable) holder.tvOrder.getBackground();
-            drawable.setColor(Color.parseColor(exercise.getBgColor()));
+//            GradientDrawable drawable = (GradientDrawable) holder.tvOrder.getBackground();
+//            drawable.setColor(Color.parseColor(exercise.getBgColor()));
+
+            //设置监听器
+            if (mOnItemClickLIstener != null){
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mOnItemClickLIstener.onItemClick(holder.itemView,position);
+                    }
+                });
+
+                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        mOnItemClickLIstener.onItemLongClick(holder.itemView,position);
+                        return true;
+                    }
+                });
+            }
         }
     }
 

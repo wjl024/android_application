@@ -77,7 +77,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,final ViewGroup container,
                              Bundle savedInstanceState) {
         this.mContext = getContext();
         initPractise();
@@ -95,10 +95,12 @@ public class ExerciseFragment extends Fragment {
             //设置监听器
             public void onItemClick(View view, int position) {
                 Exercise exercise = exerciseList.get(position);
+                Toast.makeText(getContext(),"clicked"+position,Toast.LENGTH_SHORT).show();
+                //跳转到相应的章节习题
                 Intent intent = new Intent(getContext(), ExerciseDetailActivity.class);
-                intent.putExtra("id",exercise.getId());
-                intent.putExtra("title",exercise.getTitle());
-                getContext().startActivity(intent);
+                intent.putExtra("id",exercise.getId());//用于识别那个xml文件
+                intent.putExtra("title",exercise.getTitle());//用于设置详情的标题栏
+                container.getContext().startActivity(intent);
             }
 
             @Override
