@@ -4,6 +4,8 @@ package com.example.myapplication.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
@@ -14,12 +16,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.AdViewPagerAdapter;
+import com.example.myapplication.adapter.CoursesRecylerAdapter;
 import com.example.myapplication.entity.AdImage;
+import com.example.myapplication.entity.Courses;
+import com.example.myapplication.entity.Exercise;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +47,9 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
     private List<AdImage> adImages;
     private List<ImageView> imageViews;
     private int lastPos;
+
+    private RecyclerView recyclerView;
+    private List<Courses> courses;
 
 
     public CoursesFragment() {
@@ -67,7 +82,26 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
 //        adHandler.sendEmptyMessageDelayed(MSG_AD_ID,5000);
         new AdslideThread().start();
 
+        initCourses();
+        initCoursesView(view);
         return view;
+    }
+
+    private void initCoursesView(View view) {
+        recyclerView = view.findViewById(R.id.rv_courses);
+
+        CoursesRecylerAdapter adapter = new CoursesRecylerAdapter(courses);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new CoursesRecylerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+               Courses course = courses.get(position);
+               //跳转到课程详情页面
+                Toast.makeText(getContext(),"点击了："+course.getTitle(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initIndicator(View view) {
@@ -109,6 +143,35 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
         }
     }
 
+    private void initCourses(){
+        courses = new ArrayList<>();
+        try {
+            //1.从assets目录中获取资源的输入流
+            InputStream input = getResources().getAssets().open("chapter_intro.json");
+            //2.将inputStream转为字符串
+            String json = convert(input,"UTF-8");
+            //3.利用fastjson将字符串转为对象集合
+            courses = JSON.parseArray(json, Courses.class);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static String convert(InputStream is,String encode){
+        try{
+            String line;
+            StringBuilder builder = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,encode));
+            while ((line = reader.readLine())!= null){
+                builder.append(line);
+            }
+            reader.close();
+            return builder.toString();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     private void initAdData() {
         adImages = new ArrayList<>();
         for (int i = 0; i<3;i++){
