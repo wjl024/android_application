@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.fragment.CoursesFragment;
 import com.example.myapplication.fragment.ExerciseFragment;
+import com.example.myapplication.fragment.GridViewCoursesFragment;
 import com.example.myapplication.fragment.MySettingFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.fragment.PractiseFragment;
@@ -61,7 +62,7 @@ public class Main1Activity extends AppCompatActivity {
         fragments = new SparseArray<>();
         fragments.put(R.id.rb_my, MySettingFragment.newInstance());
         fragments.put(R.id.rb_find, ExerciseFragment.newInstance("Activity向Fragment传值"));
-        fragments.put(R.id.rb_home, CoursesFragment.newInstance());
+        fragments.put(R.id.rb_home, GridViewCoursesFragment.newInstance());
         //加载默认的fragment
         replaceFragment(fragments.get(R.id.rb_my));
     }

@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment;
 
-
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,25 +25,22 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.AdViewPagerAdapter;
+import com.example.myapplication.adapter.CoursesGridViewAdapter;
 import com.example.myapplication.adapter.CoursesRecylerAdapter;
 import com.example.myapplication.entity.AdImage;
 import com.example.myapplication.entity.Courses;
-import com.example.myapplication.entity.Exercise;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeListener {
+public class GridViewCoursesFragment extends Fragment implements ViewPager.OnPageChangeListener {
     public static final int MSG_AD_ID = 1;
+
     private ViewPager viewPager;
     private TextView tvdesc;
     private LinearLayout llPoint;
@@ -49,11 +49,11 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
     private List<ImageView> imageViews;
     private int lastPos;
 
-    private RecyclerView recyclerView;
+    private GridView gvCourse;
     private List<Courses> courses;
 
 
-    public CoursesFragment() {
+    public GridViewCoursesFragment() {
         // Required empty public constructor
     }
 
@@ -69,7 +69,7 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_courses, container, false);
-        
+
         initAdData();
         initAdView(view);
         initIndicator(view);
@@ -84,26 +84,20 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
         new AdslideThread().start();
 
         initCourses();
-        initCoursesView(view);
+        gvCourse = view.findViewById(R.id.gv_course);
+        CoursesGridViewAdapter adapter = new CoursesGridViewAdapter(getContext(),courses);
+        gvCourse.setAdapter(adapter);
+        gvCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Courses courses = (Courses) adapterView.getItemAtPosition(i);
+                //跳转到课程详情界面
+                Toast.makeText(getContext(),"点击了:"+courses.getTitle(),Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 
-    private void initCoursesView(View view) {
-        recyclerView = view.findViewById(R.id.rv_courses);
-
-        CoursesRecylerAdapter adapter = new CoursesRecylerAdapter(courses);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        recyclerView.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new CoursesRecylerAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-               Courses course = courses.get(position);
-               //跳转到课程详情页面
-                Toast.makeText(getContext(),"点击了："+course.getTitle(),Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void initIndicator(View view) {
         llPoint = view.findViewById(R.id.ll_point);
@@ -258,7 +252,7 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
             }
             if (msg.what == MSG_AD_ID) {
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-                sendEmptyMessageDelayed(MSG_AD_ID, 5000);
+//                sendEmptyMessageDelayed(MSG_AD_ID, 5000);
             }
         }
     }
@@ -276,7 +270,9 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
                     e.printStackTrace();
                 }
                 if (adHandler != null){
-                    adHandler.sendEmptyMessage(MSG_AD_ID);
+                    Message msg = adHandler.obtainMessage();
+                    msg.what = MSG_AD_ID;
+                    adHandler.sendMessage(msg);
                 }
             }
         }
