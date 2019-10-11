@@ -34,7 +34,7 @@
          android:paddingLeft="5dp"
          android:paddingRight="5dp"
          android:paddingTop="2dp"
-         android:text="Android 第一行代码1"
+         android:text="Android 第一行代码"
          android:textColor="@android:color/white"
          android:textSize="12sp"/>
     </RelativeLayout>
