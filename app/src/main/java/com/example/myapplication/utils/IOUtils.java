@@ -6,12 +6,30 @@ import com.example.myapplication.entity.Practise;
 
 import org.xmlpull.v1.XmlPullParser;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IOUtils {
+    public static String convert(InputStream is,String encode){
+        try{
+            String line;
+            StringBuilder builder = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,encode));
+            while ((line = reader.readLine())!= null){
+                builder.append(line);
+            }
+            reader.close();
+            return builder.toString();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     //读取xml习题
     public static List<Practise> getXmlContents(InputStream is) throws Exception{
         List<Practise> details = null;

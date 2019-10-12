@@ -1,9 +1,12 @@
 package com.example.myapplication.fragment;
 
+import android.app.VoiceInteractor;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,11 +27,16 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.myapplication.R;
+import com.example.myapplication.activity.CourseDetailActivity;
 import com.example.myapplication.adapter.AdViewPagerAdapter;
 import com.example.myapplication.adapter.CoursesGridViewAdapter;
 import com.example.myapplication.adapter.CoursesRecylerAdapter;
 import com.example.myapplication.entity.AdImage;
 import com.example.myapplication.entity.Courses;
+import com.example.myapplication.utils.HttpsUtil;
+import com.example.myapplication.utils.NetworkUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +45,11 @@ import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class GridViewCoursesFragment extends Fragment implements ViewPager.OnPageChangeListener {
     public static final int MSG_AD_ID = 1;
@@ -83,8 +96,16 @@ public class GridViewCoursesFragment extends Fragment implements ViewPager.OnPag
 //        adHandler.sendEmptyMessageDelayed(MSG_AD_ID,5000);
         new AdslideThread().start();
 
-        initCourses();
+//        initCourses();
         gvCourse = view.findViewById(R.id.gv_course);
+//        update(courses);
+
+//        loadCoursesByNet();
+        loadCoursesByOkHttp();
+        return view;
+    }
+
+    private void update(List<Courses> courses){
         CoursesGridViewAdapter adapter = new CoursesGridViewAdapter(getContext(),courses);
         gvCourse.setAdapter(adapter);
         gvCourse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,11 +114,14 @@ public class GridViewCoursesFragment extends Fragment implements ViewPager.OnPag
                 Courses courses = (Courses) adapterView.getItemAtPosition(i);
                 //跳转到课程详情界面
                 Toast.makeText(getContext(),"点击了:"+courses.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), CourseDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("course",courses);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
-        return view;
     }
-
 
     private void initIndicator(View view) {
         llPoint = view.findViewById(R.id.ll_point);
@@ -170,6 +194,77 @@ public class GridViewCoursesFragment extends Fragment implements ViewPager.OnPag
             courses = JSON.parseArray(json, Courses.class);
         } catch (IOException e){
             e.printStackTrace();
+        }
+    }
+
+    private void loadCoursesByOkHttp(){
+        // 1.创建一个Request对象，装载url,header等request头
+        Request request = new Request.Builder()
+                .url("https://www.fastmock.site/mock/b46332ceba020b46458f016deac2c275/course/chapter")
+                .addHeader("Accept","application/json")
+                .method("GET",null)
+                .build();
+        HttpsUtil.handleSSLHandshakeByOkHttp().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    if (response.body()!=null){
+                        String json = response.body().string();
+                        final List<Courses> courses = JSON.parseArray(json,Courses.class);
+                        //使用Handler的Message更新UI
+//                        if (courses != null){
+//                            Message msg = new Message();
+//                            msg.what = 2;
+//                            msg.obj = courses;
+//                            courseHandler.sendMessage(msg);
+//                        }
+                        // 2.2 通过runOnUiThread回到主线程下更新UI
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                update(courses);
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+    private Handler courseHandler = new CourseHandler(this);
+    private void loadCoursesByNet(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String json = NetworkUtils.get("https://www.fastmock.site/mock/b46332ceba020b46458f016deac2c275/course/chapter");
+                List<Courses> courses = JSON.parseArray(json,Courses.class);
+                update(courses);
+                if (courses != null){
+                    Message msg = new Message();
+                    msg.what = 2;
+                    msg.obj= courses;
+
+                }
+            }
+        }).start();
+    }
+    private static class CourseHandler extends Handler{
+        private WeakReference<GridViewCoursesFragment> ref;
+
+        public CourseHandler(GridViewCoursesFragment fragment){
+            this.ref = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            GridViewCoursesFragment target = ref.get();
+            if (msg.what == 2){
+                target.update((List<Courses>) msg.obj);
+            }
         }
     }
 
