@@ -200,7 +200,7 @@ public class GridViewCoursesFragment extends Fragment implements ViewPager.OnPag
     private void loadCoursesByOkHttp(){
         // 1.创建一个Request对象，装载url,header等request头
         Request request = new Request.Builder()
-                .url("https://www.fastmock.site/mock/b46332ceba020b46458f016deac2c275/course/chapter")
+                .url("https://www.fastmock.site/mock/ac528fb68a2bc0e8d96b5f1fad863e6b/course/chapter")
                 .addHeader("Accept","application/json")
                 .method("GET",null)
                 .build();
@@ -240,7 +240,7 @@ public class GridViewCoursesFragment extends Fragment implements ViewPager.OnPag
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String json = NetworkUtils.get("https://www.fastmock.site/mock/b46332ceba020b46458f016deac2c275/course/chapter");
+                String json = NetworkUtils.get("https://www.fastmock.site/mock/ac528fb68a2bc0e8d96b5f1fad863e6b/course/chapter");
                 List<Courses> courses = JSON.parseArray(json,Courses.class);
                 update(courses);
                 if (courses != null){

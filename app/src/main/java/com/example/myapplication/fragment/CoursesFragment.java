@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.myapplication.R;
+import com.example.myapplication.activity.CourseDetailActivity;
 import com.example.myapplication.adapter.AdViewPagerAdapter;
 import com.example.myapplication.adapter.CoursesRecylerAdapter;
 import com.example.myapplication.entity.AdImage;
@@ -101,6 +103,11 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
                Courses course = courses.get(position);
                //跳转到课程详情页面
                 Toast.makeText(getContext(),"点击了："+course.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), CourseDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("course",course);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

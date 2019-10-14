@@ -62,6 +62,7 @@ public class CoursesRecylerAdapter extends RecyclerView.Adapter<CoursesRecylerAd
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Courses course = courses.get(position);
         holder.ivImg.setImageResource(imgIds.get(position));
+        holder.tvImgTitle.setText(course.getImgTitle());
         holder.tvTitle.setText(course.getTitle());
 
         if (onItemClickListener != null){
@@ -81,10 +82,11 @@ public class CoursesRecylerAdapter extends RecyclerView.Adapter<CoursesRecylerAd
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView ivImg;
-        TextView tvTitle;
+        TextView tvTitle,tvImgTitle;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivImg = itemView.findViewById(R.id.iv_img);
+            tvImgTitle = itemView.findViewById(R.id.tv_img_title);
             tvTitle = itemView.findViewById(R.id.tv_title);
         }
     }
