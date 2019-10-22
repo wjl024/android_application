@@ -113,7 +113,7 @@ public class GridViewCoursesFragment extends Fragment implements ViewPager.OnPag
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Courses courses = (Courses) adapterView.getItemAtPosition(i);
                 //跳转到课程详情界面
-                Toast.makeText(getContext(),"点击了:"+courses.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),"点击了:"+courses.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), CourseDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("course",courses);

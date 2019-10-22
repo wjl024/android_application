@@ -102,7 +102,7 @@ public class CoursesFragment extends Fragment implements ViewPager.OnPageChangeL
             public void onItemClick(View view, int position) {
                Courses course = courses.get(position);
                //跳转到课程详情页面
-                Toast.makeText(getContext(),"点击了："+course.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),"点击了："+course.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), CourseDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("course",course);

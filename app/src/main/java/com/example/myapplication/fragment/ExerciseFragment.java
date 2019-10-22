@@ -118,36 +118,40 @@ public class ExerciseFragment extends Fragment {
     }
 
     private List<Exercise> initPractise() {
-        Exercise exercise = new Exercise(1, "第一章 你的第一行Android代码", "共计五题", R.mipmap.circle);
-        exerciseList.add(exercise);
-        Exercise exercise1 = new Exercise(2, "第二章 探究活动", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise1);
-        Exercise exercise2 = new Exercise(3, "第三章 UI开发的点点滴滴", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise2);
-        Exercise exercise3 = new Exercise(4, "第四章 探究碎片", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise3);
-        Exercise exercise4 = new Exercise(5, "第五章 详解广播机制", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise4);
-        Exercise exercise5 = new Exercise(6, "第六章 详解持久化技术", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise5);
-        Exercise exercise6 = new Exercise(7, "第七章 探究内容提供器", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise6);
-        Exercise exercise7 = new Exercise(8, "第八章 运用手机多媒体", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise7);
-        Exercise exercise8 = new Exercise(9, "第九章 使用网络技术", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise8);
-        Exercise exercise9 = new Exercise(10, "第十章 探究服务 ", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise9);
-        Exercise exercise10 = new Exercise(11, "第十一章 基于位置的服务", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise10);
-        Exercise exercise11 = new Exercise(12, "第十二章 Material Design实战", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise11);
-        Exercise exercise12 = new Exercise(13, "第十三章 你还应该掌握的高级技巧", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise12);
-        Exercise exercise13 = new Exercise(14, "第十四章 开发库偶天气", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise13);
-        Exercise exercise14 = new Exercise(15, "第十五章 将应用发布到360应用商店", "共计5题", R.mipmap.circle);
-        exerciseList.add(exercise14);
+        if (exerciseList.size()<15) {
+            Exercise exercise = new Exercise(1, "第一章 你的第一行Android代码", "共计五题", R.mipmap.circle);
+            exerciseList.add(exercise);
+            Exercise exercise1 = new Exercise(2, "第二章 探究活动", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise1);
+            Exercise exercise2 = new Exercise(3, "第三章 UI开发的点点滴滴", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise2);
+            Exercise exercise3 = new Exercise(4, "第四章 探究碎片", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise3);
+            Exercise exercise4 = new Exercise(5, "第五章 详解广播机制", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise4);
+            Exercise exercise5 = new Exercise(6, "第六章 详解持久化技术", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise5);
+            Exercise exercise6 = new Exercise(7, "第七章 探究内容提供器", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise6);
+            Exercise exercise7 = new Exercise(8, "第八章 运用手机多媒体", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise7);
+            Exercise exercise8 = new Exercise(9, "第九章 使用网络技术", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise8);
+            Exercise exercise9 = new Exercise(10, "第十章 探究服务 ", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise9);
+            Exercise exercise10 = new Exercise(11, "第十一章 基于位置的服务", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise10);
+            Exercise exercise11 = new Exercise(12, "第十二章 Material Design实战", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise11);
+            Exercise exercise12 = new Exercise(13, "第十三章 你还应该掌握的高级技巧", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise12);
+            Exercise exercise13 = new Exercise(14, "第十四章 开发库偶天气", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise13);
+            Exercise exercise14 = new Exercise(15, "第十五章 将应用发布到360应用商店", "共计5题", R.mipmap.circle);
+            exerciseList.add(exercise14);
+        } else {
+            return exerciseList;
+        }
         return exerciseList;
     }
 

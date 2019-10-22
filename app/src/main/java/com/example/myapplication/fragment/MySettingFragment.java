@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.activity.LoginActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.activity.PlayRecordActivity;
 import com.example.myapplication.activity.SettingActivity;
 import com.example.myapplication.activity.UserInfoActivity;
 
@@ -97,7 +98,11 @@ public class MySettingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (isLogin){
-
+                    Intent intent = new Intent(getContext(), PlayRecordActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name",readLoginInfo());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }else {
                     Toast.makeText(mContext,"请先登录",Toast.LENGTH_SHORT).show();
                 }
