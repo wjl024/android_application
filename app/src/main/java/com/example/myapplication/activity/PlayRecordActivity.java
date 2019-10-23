@@ -171,7 +171,7 @@ public class PlayRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (!recordsList.isEmpty()) {
-                    recordService.removeAll(recordsList.get(mPosition));
+                    recordService.removeAll(recordsList.get(0));
                 }
                 List<Records> newrecordsList1 = new ArrayList<>();
                 newrecordsList1 = recordService.get(readLoginInfo());

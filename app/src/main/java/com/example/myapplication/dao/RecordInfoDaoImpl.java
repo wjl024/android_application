@@ -8,23 +8,24 @@ import android.util.Log;
 
 import com.example.myapplication.entity.Records;
 import com.example.myapplication.utils.DBHelp2;
+import com.example.myapplication.utils.DBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecordInfoDaoImpl implements RecordInfoDao {
-    private DBHelp2 helper;
+    private DBHelper helper;
     private SQLiteDatabase db;
 
     public RecordInfoDaoImpl(Context context){
-        helper = DBHelp2.getInstance(context);
+        helper = DBHelper.getInstance(context);
     }
 
     @Override
     public List<Records> select(String username) {
         List<Records> recordsList = new ArrayList<Records>();
         db = helper.getReadableDatabase();
-        Cursor cursor = db.query(DBHelp2.TBL_NAME_RECORD,null,"user_name=?",
+        Cursor cursor = db.query(DBHelper.TBL_NAME_RECORD, null, "user_name=?",
                 new String[]{username},null,null,null);
         while (cursor.moveToNext()){
               int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -56,7 +57,7 @@ public class RecordInfoDaoImpl implements RecordInfoDao {
         values.put("title",records.getTitle());
 
         db = helper.getWritableDatabase();
-        db.update(DBHelp2.TBL_NAME_RECORD,values,"user_name = ?",new String[]{records.getUsername()});
+        db.update(DBHelper.TBL_NAME_RECORD, values, "user_name = ?", new String[]{records.getUsername()});
         db.close();
     }
 
